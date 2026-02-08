@@ -42,7 +42,7 @@ app.use(express.json());
 
 
 // ---------------- EMAIL TEMPLATES ----------------
-function getEmailTemplate(event, name = "User") {
+function getEmailTemplate(event, name = "User", data = {}) {
   const date = new Date().toDateString();
 
   switch (event) {
@@ -61,6 +61,33 @@ You can now proceed with your hostel check-in via the app.
 Thank you for choosing us.
 — Hostel Booking App Team
 `;
+
+          case "PASSWORD_RESET":
+      return `Hello ${name},
+
+We received a request to reset your password.
+
+Reset link:
+${data.resetLink || "Reset link will be provided by Auth"}
+
+If you did not request this, please ignore this email.
+
+— Hostel Booking App Team
+`;
+
+    case "EMAIL_VERIFICATION":
+      return `Hello ${name},
+
+Welcome to the Hostel Booking App 🎉
+
+Please verify your email using this link:
+${data.verifyLink || "Verification link will be provided by Auth"}
+
+Once verified, you can proceed to book a hostel room.
+
+— Hostel Booking App Team
+`;
+
 
     case "PAYMENT_FAILED":
       return `Hello ${name},
@@ -161,7 +188,8 @@ app.post("/retry/:id", async (req, res) => {
 // Create notification + send email if needed
 app.post("/notify", async (req, res) => {
   try {
-    const { event, channel, user, message } = req.body;
+    const { event, channel, user, message, data } = req.body;
+    const userName = user?.name || user?.fullName || "User";
 
     if (!event || !user?.id || !message) {
       return res.status(400).json({
@@ -191,8 +219,8 @@ app.post("/notify", async (req, res) => {
         if (!notification.email) {
           throw new Error("User email missing");
         }
-
-      const emailBody = getEmailTemplate(notification.event);
+      
+      const emailBody = getEmailTemplate(notification.event, userName, data);
 
 await sendEmailSendGrid(
   notification.email,
@@ -269,12 +297,12 @@ app.get("/notifications/:userId", async (req, res) => {
 
 // Preview email template without sending
 app.post("/preview-email", (req, res) => {
-  const { event, user = {}, booking = {} } = req.body;
+  const { event, user = {}, data = {} } = req.body;
 
   const userName =
     user.name || user.fullName || "User";
 
-  const preview = getEmailTemplate(event, userName);
+  const preview = getEmailTemplate(event, userName, data);
 
   res.json({
     event,
