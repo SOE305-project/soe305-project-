@@ -78,7 +78,7 @@ If you did not request this, please ignore this email.
     case "EMAIL_VERIFICATION":
       return `Hello ${name},
 
-Welcome to the Hostel Booking App 🎉
+Welcome to the Hostel Booking App 
 
 Please verify your email using this link:
 ${data.verifyLink || "Verification link will be provided by Auth"}
@@ -101,34 +101,52 @@ If the issue persists, contact support via the Hostel Booking App.
 — Hostel Booking App Team
 `;
 
-    case "BOOKING_CREATED":
+    case "BOOKING_CREATED": {
+      const bookingId = data.bookingId || data.booking?.id || "N/A";
+      const room = data.room || data.booking?.room || "Not assigned";
+      const checkIn = data.checkIn || data.booking?.checkIn || "TBA";
+      const checkOut = data.checkOut || data.booking?.checkOut || "TBA";
+
       return `Hello ${name},
 
 Your room has been successfully booked 
 
 Booking Details:
-• Booking ID: ${event}
-• Status: Confirmed
+• Booking ID: ${bookingId}
+• Room: ${room}
+• Check-in: ${checkIn}
+• Check-out: ${checkOut}
+• Date: ${date}
 
-We look forward to welcoming you.
+You can view your booking in the Hostel Booking App.
 
 — Hostel Booking App Team
 `;
+    }
+    
 
-    case "BOOKING_CANCELLED":
+    case "BOOKING_CANCELLED": {
+      const bookingId = data.bookingId || data.booking?.id || "N/A";
+
       return `Hello ${name},
 
-Your hostel booking has been cancelled.
+Your hostel booking has been cancelled 
+
+Booking Details:
+• Booking ID: ${bookingId}
+• Date: ${date}
 
 If this was not intended, please log in to the app and make a new booking.
 
 — Hostel Booking App Team
 `;
+    }
+
 
     case "CHECK_IN_REMINDER":
       return `Hello ${name},
 
-This is a reminder that your hostel check-in date is approaching ⏰
+This is a reminder that your hostel check-in date is approaching 
 
 Please ensure you have completed all required steps before arrival.
 
@@ -204,6 +222,7 @@ app.post("/notify", async (req, res) => {
       email: user.email || null,
       phone: user.phone || null,
       message,
+      meta: data || {},
       channel: (channel || "in_app").toLowerCase(),
       status: "pending",
       attempts: 0,
