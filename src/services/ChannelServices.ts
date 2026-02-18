@@ -2,7 +2,6 @@ import axios from 'axios';
 
 
 
-
 // Validation check 
 
 const isValidEmail = (email: string) =>
@@ -20,19 +19,6 @@ const isValidPhone = (phone: string) => {
 /**
  * Email Service using SendGrid API
  */
-
-
-const isValidEmail = (email: string) =>
-  typeof email === 'string' && email.trim().includes('@');
-
-const normalizePhone = (phone: string) =>
-  typeof phone === 'string' ? phone.replace(/\s+/g, '') : '';
-
-const isValidPhone = (phone: string) => {
-  const p = normalizePhone(phone);
-  return p.length >= 10; // simple safe check (won’t block most Nigerian numbers)
-};
-
 
 
 export const EmailService = {
