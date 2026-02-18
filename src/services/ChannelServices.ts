@@ -1,6 +1,22 @@
 import axios from 'axios';
 
 
+
+
+// Validation check 
+
+const isValidEmail = (email: string) =>
+  typeof email === 'string' && email.trim().includes('@');
+
+const normalizePhone = (phone: string) =>
+  typeof phone === 'string' ? phone.replace(/\s+/g, '') : '';
+
+const isValidPhone = (phone: string) => {
+  const p = normalizePhone(phone);
+  return p.length >= 10; // simple safe check (won’t block most Nigerian numbers)
+};
+
+
 /**
  * Email Service using SendGrid API
  */
@@ -26,7 +42,7 @@ export const EmailService = {
          
 
         if (!SENDGRID_API_KEY) {
-            console.error('❌ SENDGRID_API_KEY not configured');
+            console.error('SENDGRID_API_KEY not configured');
             return false;
         }
 
@@ -57,14 +73,14 @@ export const EmailService = {
             );
 
             if (response.status === 202) {
-                console.log(`✅ Email sent to ${to}`);
+                console.log(`Email sent to ${to}`);
                 return true;
             } else {
-                console.error(`❌ Failed to send email. Status: ${response.status}`);
+                console.error(`Failed to send email. Status: ${response.status}`);
                 return false;
             }
         } catch (error: any) {
-            console.error('❌ Error sending email:', error.response?.data || error.message);
+            console.error('Error sending email:', error.response?.data || error.message);
             return false;
         }
     }
@@ -79,7 +95,7 @@ export const SmsService = {
         const TERMII_SENDER_ID = process.env.TERMII_SENDER_ID || 'YourApp';
 
         if (!TERMII_API_KEY) {
-            console.error('❌ TERMII_API_KEY not configured');
+            console.error('TERMII_API_KEY not configured');
             return false;
         }
 
@@ -102,14 +118,14 @@ export const SmsService = {
             );
 
             if (response.data.message_id) {
-                console.log(`✅ SMS sent to ${to}`);
+                console.log(`SMS sent to ${to}`);
                 return true;
             } else {
-                console.error(`❌ Failed to send SMS:`, response.data);
+                console.error(`Failed to send SMS:`, response.data);
                 return false;
             }
         } catch (error: any) {
-            console.error('❌ Error sending SMS:', error.response?.data || error.message);
+            console.error('Error sending SMS:', error.response?.data || error.message);
             return false;
         }
     }
