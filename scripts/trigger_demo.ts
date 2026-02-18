@@ -15,8 +15,8 @@ async function setupTestUser(userId: string) {
     console.log(`👤 Setting up test user: ${userId}...`);
     // We use the direct Firebase Admin SDK to ensure the user exists
     await db.collection('users').doc(userId).set({
-        email: 'demo@example.com',
-        phoneNumber: '+1234567890',
+        email: 'chinyeakaprosper2006@gmail.com',
+        phoneNumber: '+2348165121933',
         createdAt: new Date()
     }, { merge: true });
     console.log('User ready.');

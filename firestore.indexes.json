@@ -9,6 +9,10 @@
                     "order": "ASCENDING"
                 },
                 {
+                    "fieldPath": "channel",
+                    "order": "ASCENDING"
+                },
+                {
                     "fieldPath": "createdAt",
                     "order": "DESCENDING"
                 }

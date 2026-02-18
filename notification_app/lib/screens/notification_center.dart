@@ -29,28 +29,45 @@ class _NotificationCenterState extends State<NotificationCenter> {
             ListTile(
               leading: const Icon(Icons.email),
               title: const Text('Send Test Email'),
-              onTap: () {
-                _dispatcher.dispatch(
-                    channel: 'email',
-                    recipient: 'test@example.com',
-                    content: 'This is a test email from Flutter Web!',
-                    subject: 'Flutter Test');
-                Navigator.pop(context);
-                ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Triggered Email Send')));
+              onTap: () async {
+                await FirebaseFirestore.instance.collection('notifications').add({
+                  'userId': widget.userId,
+                  'channel': ['email'],
+                  'type': 'test_email',
+                  'title': 'Flutter Test Email',
+                  'message': 'This is a test email from Flutter Web!',
+                  'metadata': {'email': 'test@example.com'},
+                  'status': 'pending',
+                  'createdAt': FieldValue.serverTimestamp(),
+                  'isRead': false,
+                });
+                if (mounted) {
+                  Navigator.pop(context);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Triggered Email Send')));
+                }
               },
             ),
             ListTile(
               leading: const Icon(Icons.sms),
               title: const Text('Send Test SMS'),
-              onTap: () {
-                _dispatcher.dispatch(
-                    channel: 'sms',
-                    recipient: '+1234567890',
-                    content: 'This is a test SMS from Flutter Web!');
-                Navigator.pop(context);
-                ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Triggered SMS Send')));
+              onTap: () async {
+                await FirebaseFirestore.instance.collection('notifications').add({
+                  'userId': widget.userId,
+                  'channel': ['sms'],
+                  'type': 'test_sms',
+                  'title': 'Flutter Test SMS',
+                  'message': 'This is a test SMS from Flutter Web!',
+                  'metadata': {'phoneNumber': '+1234567890'},
+                  'status': 'pending',
+                  'createdAt': FieldValue.serverTimestamp(),
+                  'isRead': false,
+                });
+                if (mounted) {
+                  Navigator.pop(context);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Triggered SMS Send')));
+                }
               },
             ),
           ],

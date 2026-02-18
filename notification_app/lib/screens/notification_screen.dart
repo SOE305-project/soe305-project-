@@ -39,7 +39,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
             .collection('notifications')
-            .where('userId', 'isEqualTo': widget.userId)
+            .where('userId', isEqualTo: widget.userId)
+            .where('channel', isEqualTo: 'in_app') // Show only in-app notifications
             .orderBy('createdAt', descending: true)
             .snapshots(),
         builder: (context, snapshot) {
@@ -78,17 +79,32 @@ class _NotificationScreenState extends State<NotificationScreen> {
         icon = Icons.check_circle;
         color = Colors.green;
         break;
-      case 'BOOKING_CONFIRMED':
-        icon = Icons.hotel;
-        color = Colors.blue;
-        break;
-      case 'RESERVATION_CANCELLED':
-        icon = Icons.cancel;
+      case 'PAYMENT_FAILED':
+        icon = Icons.error;
         color = Colors.red;
         break;
-      case 'RESERVATION_EXPIRED':
-        icon = Icons.timer_off;
+      case 'BOOKING_CONFIRMED':
+        icon = Icons.calendar_today;
+        color = Colors.blue;
+        break;
+      case 'BOOKING_CANCELLED':
+        icon = Icons.event_busy;
         color = Colors.orange;
+        break;
+      case 'password_changed': // Handling lowercase from backend
+      case 'PASSWORD_CHANGED':
+        icon = Icons.lock_reset;
+        color = Colors.purple;
+        break;
+      case 'security_alert':
+      case 'SECURITY_ALERT':
+        icon = Icons.security;
+        color = Colors.redAccent;
+        break;
+      case 'user_signup':
+      case 'USER_SIGNUP':
+        icon = Icons.celebration;
+        color = Colors.amber;
         break;
       default:
         icon = Icons.notifications;
@@ -97,36 +113,97 @@ class _NotificationScreenState extends State<NotificationScreen> {
 
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      child: ListTile(
-        leading: CircleAvatar(
-          backgroundColor: color.withOpacity(0.1),
-          child: Icon(icon, color: color),
-        ),
-        title: Text(n.title, style: const TextStyle(fontWeight: FontWeight.bold)),
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(n.message),
-            const SizedBox(height: 4),
-            Row(
-              children: [
-                if (n.status == 'sent') 
-                  const Icon(Icons.mark_email_read, size: 14, color: Colors.green),
-                 if (n.status == 'sent') 
-                  const SizedBox(width: 4),
-                Text(
-                  n.status.toUpperCase(),
-                  style: TextStyle(
-                    fontSize: 10,
-                    color: n.status == 'sent' ? Colors.green : Colors.grey,
-                  ),
+      elevation: n.isRead ? 0 : 2,
+      color: n.isRead ? Colors.white : const Color(0xFFF5F9FF),
+      child: InkWell(
+        onTap: () {
+          if (!n.isRead) {
+            FirebaseFirestore.instance
+                .collection('notifications')
+                .doc(n.id)
+                .update({'isRead': true});
+          }
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              CircleAvatar(
+                backgroundColor: color.withOpacity(0.1),
+                child: Icon(icon, color: color),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            n.title,
+                            style: TextStyle(
+                              fontWeight: n.isRead ? FontWeight.normal : FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                        if (!n.isRead)
+                          Container(
+                            width: 8,
+                            height: 8,
+                            decoration: const BoxDecoration(
+                              color: Colors.blue,
+                              shape: BoxShape.circle,
+                            ),
+                          ),
+                      ],
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      n.message,
+                      style: TextStyle(
+                        color: Colors.grey[700],
+                        fontSize: 14,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          _formatDate(n.createdAt),
+                          style: TextStyle(color: Colors.grey[500], fontSize: 12),
+                        ),
+                        if (n.status == 'sent')
+                          const Icon(Icons.check_circle, size: 14, color: Colors.green),
+                      ],
+                    ),
+                  ],
                 ),
-              ],
-            )
-          ],
+              ),
+            ],
+          ),
         ),
-        isThreeLine: true,
       ),
     );
+  }
+
+  String _formatDate(DateTime date) {
+    final now = DateTime.now();
+    final difference = now.difference(date);
+
+    if (difference.inDays == 0) {
+      if (difference.inHours == 0) {
+        return '${difference.inMinutes}m ago';
+      }
+      return '${difference.inHours}h ago';
+    } else if (difference.inDays < 7) {
+      return '${difference.inDays}d ago';
+    } else {
+      return '${date.day}/${date.month}/${date.year}';
+    }
   }
 }

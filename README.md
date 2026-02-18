@@ -1,7 +1,18 @@
 <<<<<<< HEAD
 # soe305-project-
 =======
-# SOE305 Notification Backend
+# Hostel Notification Backend & App 🚀
+
+A complete notification system for the Hostel Management Platform.
+
+## 📱 Flutter UI App (`notification_app/`)
+This repo includes a production-ready Flutter app for displaying notifications.
+- **Features**: Real-time updates, Mark as Read, Event-specific icons (Booking, Payment, Security).
+- **Location**: `./notification_app`
+
+👉 **[Read the Integration Guide](INTEGRATION_GUIDE.md)** for full details.
+
+## 🛠️ Backend Setup
 
 Production-ready notification system supporting **Email**, **SMS**, and **In-App** notifications for the SOE305 project.
 
@@ -76,6 +87,10 @@ npm start
 ```
 
 The server will start on `http://localhost:3000`
+
+## 👥 Contributors
+Proudly built by **Chinyeaka Prosper Uzoma** and team.
+👉 **[View Full Team List](CONTRIBUTORS.md)**.
 
 ## 📡 API Endpoints
 
