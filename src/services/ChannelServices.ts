@@ -1,12 +1,29 @@
 import axios from 'axios';
 
+
 /**
  * Email Service using SendGrid API
  */
+
+
+const isValidEmail = (email: string) =>
+  typeof email === 'string' && email.trim().includes('@');
+
+const normalizePhone = (phone: string) =>
+  typeof phone === 'string' ? phone.replace(/\s+/g, '') : '';
+
+const isValidPhone = (phone: string) => {
+  const p = normalizePhone(phone);
+  return p.length >= 10; // simple safe check (won’t block most Nigerian numbers)
+};
+
+
+
 export const EmailService = {
     async send(to: string, htmlContent: string, subject: string): Promise<boolean> {
         const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY;
         const FROM_EMAIL = process.env.FROM_EMAIL || 'noreply@yourdomain.com';
+         
 
         if (!SENDGRID_API_KEY) {
             console.error('❌ SENDGRID_API_KEY not configured');
