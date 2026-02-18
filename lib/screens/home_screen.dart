@@ -10,12 +10,21 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(title: const Text('Home')),
       body: Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: [
             ElevatedButton(
               onPressed: () => context.go('/hostels'),
               child: const Text('View Hostels'),
             ),
+            const SizedBox(height: 16),
+            ElevatedButton(
+              onPressed: () => context.go('/admin/rooms'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.grey[800],
+                foregroundColor: Colors.white,
+              ),
+              child: const Text('Admin Dashboard'),
             //Added a button to view profile
             const SizedBox(height: 12),
             ElevatedButton(

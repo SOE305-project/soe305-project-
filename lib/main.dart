@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hostel_reservation/splash_screen.dart';
 import 'data_seeder.dart';
 import 'firebase_options.dart';
 import 'screens/home_screen.dart';
 import 'screens/hostel_list_screen.dart';
 import 'screens/hostel_detail_screen.dart';
 import 'screens/room_selection_screen.dart';
+import 'screens/admin/manage_rooms_screen.dart';
+import 'screens/admin/add_edit_room_screen.dart';
 import 'screens/user_profile.dart';
 
 void main() async {
@@ -21,7 +24,9 @@ void main() async {
 
 final _router = GoRouter(
   routes: [
-    GoRoute(path: '/', builder: (context, state) => const HomeScreen()),
+    GoRoute(path: '/', builder: (context, state) => const SplashScreen()),
+    GoRoute(path: '/home', builder: (context, state) => const HomeScreen()),
+
     GoRoute(
       path: '/hostels',
       builder: (context, state) => const HostelListScreen(),
@@ -41,6 +46,21 @@ final _router = GoRouter(
         return RoomSelectionScreen(hostelId: id);
       },
     ),
+    GoRoute(
+      path: '/admin/rooms',
+      builder: (context, state) => const ManageRoomsScreen(),
+    ),
+    GoRoute(
+      path: '/admin/rooms/add',
+      builder: (context, state) => const AddEditRoomScreen(),
+    ),
+    GoRoute(
+      path: '/admin/rooms/edit/:id',
+      builder: (context, state) {
+        final id = state.pathParameters['id']!;
+        final data = state.extra as Map<String, dynamic>?;
+        return AddEditRoomScreen(roomId: id, initialData: data);
+      },
     //user profile route
     GoRoute(
       path: '/profile',

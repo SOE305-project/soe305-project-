@@ -12,7 +12,12 @@ Future<void> seedHostelData() async {
       'name': 'Happy Stay Hostel',
       'totalRooms': 5,
       'availableRooms': 5,
-      'imageUrl':
+      'imageUrls': [
+        'https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=600&q=80',
+        'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&w=600&q=80',
+        'https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&w=600&q=80',
+      ],
+      'imageUrl': // Keep for backward compatibility if needed, or remove if schema is strict.
           'https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=600&q=80',
       'createdAt': FieldValue.serverTimestamp(),
     });
