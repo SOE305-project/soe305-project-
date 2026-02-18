@@ -99,8 +99,9 @@ class _UserProfileScreenState extends State<UserProfileScreen>
                     AnimatedBuilder(
                       animation: _tabController,
                       builder: (context, _) {
-                        if (_tabController.index == 0)
+                        if (_tabController.index == 0) {
                           return const SizedBox.shrink();
+                        }
                         return _buildTransactionSection();
                       },
                     ),
@@ -119,7 +120,7 @@ class _UserProfileScreenState extends State<UserProfileScreen>
 
   SliverAppBar _buildAppBar(Map<String, dynamic>? userData) {
     final displayName = userData?['name'] ?? _user?.displayName ?? 'User';
-    final email = userData?['email'] ?? _user?.email ?? '';
+    final email = userData?['email'] ?? _user?.email ?? 'useremail';
     final photoUrl = userData?['avatarUrl'] ?? _user?.photoURL;
 
     return SliverAppBar(
