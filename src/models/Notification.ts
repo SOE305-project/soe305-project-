@@ -31,3 +31,37 @@ export interface SendNotificationRequest {
     payload: Record<string, any>;
     idempotencyKey?: string;
 }
+
+
+
+
+
+
+
+
+
+
+// import { EventType } from './Events';
+
+// export type NotificationChannel = 'email' | 'sms' | 'in_app';
+
+// export type NotificationStatus = 'pending' | 'sent' | 'failed';
+
+// export type NotificationType = 'transactional' | 'promotional' | 'system';
+
+// export interface NotificationRecord {
+//     id: string;
+//     userId: string;
+//     event: EventType;
+//     type: NotificationType;
+//     title: string;
+//     errorMessage?: string;
+//     createdAt: Date;
+//     sentAt?: Date;
+//     readAt?: Date;
+// }
+
+// export interface SendNotificationRequest {
+//     userId: string;
+//     idempotencyKey?: string;
+// }
