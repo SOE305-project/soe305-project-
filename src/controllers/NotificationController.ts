@@ -143,7 +143,7 @@ export const NotificationController = {
 
     /**
      * GET /api/notifications/detail/:id
-     * Get a specific notification by ID
+     * Get specific notification by ID
      */
     async getNotificationById(req: Request, res: Response): Promise<void> {
         try {
