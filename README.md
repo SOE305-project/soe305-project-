@@ -1,22 +1,21 @@
-<<<<<<< HEAD
+ HEAD
 # soe305-project-
-=======
-# Hostel Notification Backend & App 🚀
+# Hostel Notification Backend & App 
 
 A complete notification system for the Hostel Management Platform.
 
-## 📱 Flutter UI App (`notification_app/`)
+## Flutter UI App (`notification_app/`)
 This repo includes a production-ready Flutter app for displaying notifications.
 - **Features**: Real-time updates, Mark as Read, Event-specific icons (Booking, Payment, Security).
 - **Location**: `./notification_app`
 
-👉 **[Read the Integration Guide](INTEGRATION_GUIDE.md)** for full details.
+ **[Read the Integration Guide](INTEGRATION_GUIDE.md)** for full details.
 
-## 🛠️ Backend Setup
+##  Backend Setup
 
 Production-ready notification system supporting **Email**, **SMS**, and **In-App** notifications for the SOE305 project.
 
-## 🚀 Features
+##  Features
 
 - ✅ Multi-channel notifications (Email via SendGrid, SMS via Termii, In-App)
 - ✅ Event-driven architecture with predefined event types
@@ -26,7 +25,7 @@ Production-ready notification system supporting **Email**, **SMS**, and **In-App
 - ✅ TypeScript for type safety
 - ✅ Idempotency support to prevent duplicate notifications
 
-## 📋 Prerequisites
+##  Prerequisites
 
 - Node.js (v16 or higher)
 - npm or yarn
@@ -34,7 +33,7 @@ Production-ready notification system supporting **Email**, **SMS**, and **In-App
 - SendGrid account and API key
 - Termii account and API key
 
-## 🔧 Setup Instructions
+##  Setup Instructions
 
 ### 1. Clone and Install Dependencies
 
@@ -71,7 +70,7 @@ APP_URL=https://yourapp.com
 Place your `serviceAccountKey.json` file in the project root directory. Get this from:
 - Firebase Console → Project Settings → Service Accounts → Generate New Private Key
 
-⚠️ **Never commit this file to version control!**
+**Never commit this file to version control!**
 
 ### 4. Run the Server
 
@@ -88,9 +87,9 @@ npm start
 
 The server will start on `http://localhost:3000`
 
-## 👥 Contributors
+##  Contributors
 Proudly built by **Chinyeaka Prosper Uzoma** and team.
-👉 **[View Full Team List](CONTRIBUTORS.md)**.
+ **[View Full Team List](CONTRIBUTORS.md)**.
 
 ## 📡 API Endpoints
 
@@ -103,7 +102,7 @@ See [API_DOCS.md](./API_DOCS.md) for detailed API documentation.
 - `PUT /api/notifications/:id/read` - Mark notification as read
 - `GET /health` - Health check
 
-## 📝 Supported Event Types
+##  Supported Event Types
 
 - `user_signup` - New user registration
 - `user_login` - User login notification
@@ -116,13 +115,13 @@ See [API_DOCS.md](./API_DOCS.md) for detailed API documentation.
 - `account_update` - Account information updated
 - `security_alert` - Security-related alert
 
-## 🧪 Testing
+##  Testing
 
 ```bash
 npm test
 ```
 
-## 🏗️ Project Structure
+## Project Structure
 
 ```
 src/
@@ -148,7 +147,7 @@ src/
 └── index.ts          # Application entry point
 ```
 
-## 🚢 Deployment
+##  Deployment
 
 ### Build for Production
 
@@ -172,14 +171,14 @@ Upload `serviceAccountKey.json` securely:
 - Use environment secrets (recommended)
 - Or use `GOOGLE_APPLICATION_CREDENTIALS` environment variable
 
-## 🔒 Security Notes
+##  Security Notes
 
 - ✅ `.env` and `serviceAccountKey.json` are in `.gitignore`
 - ⚠️ Add authentication middleware in production
 - ⚠️ Rate limiting recommended for public endpoints
 - ⚠️ Validate all user inputs
 
-## 🤝 Frontend Integration
+##  Frontend Integration
 
 Frontend teams can integrate by making HTTP requests to the API endpoints.
 
@@ -204,11 +203,7 @@ const result = await response.json();
 
 See [API_DOCS.md](./API_DOCS.md) for complete examples.
 
-## 📞 Support
-
 For issues or questions, contact the backend team.
 
-## 📄 License
-
 MIT
->>>>>>> b84fe15 (Initial notification backend implementation)
+ b84fe15 (Initial notification backend implementation)
