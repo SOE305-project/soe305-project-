@@ -14,6 +14,7 @@ class RoomSelectionScreen extends StatefulWidget {
 }
 
 class _RoomSelectionScreenState extends State<RoomSelectionScreen> {
+  Map<String, dynamic>? _selectedRoomData; // Added
   String? _selectedRoomTypeId;
   String? _selectedRoomId;
 
