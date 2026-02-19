@@ -331,7 +331,7 @@ class _RoomSelectionScreenState extends State<RoomSelectionScreen> {
     if (paymentSuccessful == true && mounted) {
       setState(() {
         _selectedRoomId = null;
-        _selectedRoomData = null;
+        // _selectedRoomData = null;
       });
 
       ScaffoldMessenger.of(context).showSnackBar(
