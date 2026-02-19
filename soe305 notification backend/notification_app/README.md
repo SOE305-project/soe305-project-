@@ -1,4 +1,4 @@
-# hostel_reservation
+# notification_app
 
 A new Flutter project.
 
